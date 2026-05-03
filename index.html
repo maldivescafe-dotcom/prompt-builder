@@ -14,6 +14,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tab-btn{flex:1;min-width:72px;padding:12px 8px;font-size:.75rem;color:#7060a8;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;font-weight:500}
 .tab-btn.active{color:#c9b8ff;border-bottom-color:#8b5cf6;background:#120d2a}
 .tab-btn:hover:not(.active){color:#a090d0;background:#110c25}
+.multi-hint{font-size:.7rem;color:#6a5a90;text-align:center;padding:6px 0 2px;letter-spacing:.02em}
 .main{padding:14px 12px;max-width:640px;margin:0 auto}
 .section{margin-bottom:14px}
 .section-label{font-size:.72rem;color:#8b7ab8;margin-bottom:6px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
@@ -33,11 +34,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .copy-btn.copied{background:linear-gradient(135deg,#065f46,#059669)}
 .reset-btn{background:#1e1040;color:#9080c0;border:1px solid #3d2a70;flex:none;padding:10px 16px}
 .reset-btn:hover{background:#2d1a5e;color:#c0b0e0}
-.extra-row{margin-top:12px}
+.extra-row{margin-bottom:14px}
 .extra-input{width:100%;padding:8px 12px;background:#13092e;border:1px solid #2d1a5e;border-radius:8px;color:#d4c8f8;font-size:.82rem;outline:none;transition:border .2s}
 .extra-input::placeholder{color:#5a4a80}
 .extra-input:focus{border-color:#6d28d9}
-.extra-label{font-size:.7rem;color:#7060a8;margin-bottom:4px}
+.extra-label{font-size:.72rem;color:#8b7ab8;margin-bottom:6px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
 .quality-row{margin-top:14px}
 .divider{height:1px;background:#1e1440;margin:14px 0}
 </style>
@@ -55,6 +56,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <button class="tab-btn" onclick="switchTab('landscape')">🌿 風景・自然</button>
   <button class="tab-btn" onclick="switchTab('fantasy')">⚔️ ファンタジー</button>
 </div>
+<div class="multi-hint">各項目は複数選択できます</div>
 
 <div class="main">
 
@@ -62,7 +64,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="tab-portrait">
     <div class="section">
       <div class="section-label">性別・年齢</div>
-      <div class="btn-group" data-group="p_subject">
+      <div class="btn-group" data-group="p_subject" data-multi="true">
         <button class="opt-btn" data-val="young woman">若い女性</button>
         <button class="opt-btn" data-val="young man">若い男性</button>
         <button class="opt-btn" data-val="child">子供</button>
@@ -72,8 +74,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
     </div>
     <div class="section">
+      <div class="section-label">人種・国籍</div>
+      <div class="btn-group" data-group="p_ethnicity" data-multi="true">
+        <button class="opt-btn" data-val="Japanese, East Asian facial features">日本人</button>
+        <button class="opt-btn" data-val="East Asian appearance">アジア系</button>
+        <button class="opt-btn" data-val="Southeast Asian appearance">東南アジア系</button>
+        <button class="opt-btn" data-val="Caucasian, Western European appearance">西洋系（白人）</button>
+        <button class="opt-btn" data-val="Black, African appearance">黒人系</button>
+        <button class="opt-btn" data-val="Latino, Latin American appearance">ラテン系</button>
+        <button class="opt-btn" data-val="mixed ethnicity, multiracial appearance">混血・ハーフ</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">服装</div>
+      <div class="btn-group" data-group="p_outfit" data-multi="true">
+        <button class="opt-btn" data-val="casual T-shirt, casual wear">Tシャツ・カジュアル</button>
+        <button class="opt-btn" data-val="elegant dress">ドレス</button>
+        <button class="opt-btn" data-val="formal suit">スーツ・フォーマル</button>
+        <button class="opt-btn" data-val="kimono, Japanese traditional clothing">着物・和服</button>
+        <button class="opt-btn" data-val="school uniform, sailor uniform">制服・セーラー服</button>
+        <button class="opt-btn" data-val="jacket, coat, outerwear">コート・ジャケット</button>
+        <button class="opt-btn" data-val="sleeveless top, tank top">ノースリーブ</button>
+        <button class="opt-btn" data-val="white medical coat, nurse uniform">白衣・ナース服</button>
+        <button class="opt-btn" data-val="sportswear, athletic wear">スポーツウェア</button>
+      </div>
+    </div>
+    <div class="section">
       <div class="section-label">雰囲気</div>
-      <div class="btn-group" data-group="p_mood">
+      <div class="btn-group" data-group="p_mood" data-multi="true">
         <button class="opt-btn" data-val="natural, soft expression">ナチュラル</button>
         <button class="opt-btn" data-val="cool, confident expression">クール</button>
         <button class="opt-btn" data-val="cute, cheerful expression">かわいい</button>
@@ -84,7 +112,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">構図</div>
-      <div class="btn-group" data-group="p_comp">
+      <div class="btn-group" data-group="p_comp" data-multi="true">
         <button class="opt-btn" data-val="bust-up portrait">バストアップ</button>
         <button class="opt-btn" data-val="full body shot">全身</button>
         <button class="opt-btn" data-val="close-up face shot">クローズアップ</button>
@@ -93,7 +121,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">背景</div>
-      <div class="btn-group" data-group="p_bg">
+      <div class="btn-group" data-group="p_bg" data-multi="true">
         <button class="opt-btn" data-val="white studio background">白・グレー</button>
         <button class="opt-btn" data-val="lush forest background">自然・森</button>
         <button class="opt-btn" data-val="urban cityscape background">都市</button>
@@ -103,7 +131,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">照明</div>
-      <div class="btn-group" data-group="p_light">
+      <div class="btn-group" data-group="p_light" data-multi="true">
         <button class="opt-btn" data-val="natural soft lighting">自然光</button>
         <button class="opt-btn" data-val="professional studio lighting">スタジオ照明</button>
         <button class="opt-btn" data-val="golden hour sunlight">夕日・ゴールデンアワー</button>
@@ -112,7 +140,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">画風</div>
-      <div class="btn-group" data-group="p_style">
+      <div class="btn-group" data-group="p_style" data-multi="true">
         <button class="opt-btn" data-val="photorealistic, hyperrealistic">写真リアル</button>
         <button class="opt-btn" data-val="digital art">デジタルアート</button>
         <button class="opt-btn" data-val="watercolor painting">水彩</button>
@@ -124,8 +152,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">エフェクト</div>
-      <div class="btn-group" data-group="p_fx">
-        <button class="opt-btn" data-val="">なし</button>
+      <div class="btn-group" data-group="p_fx" data-multi="true">
         <button class="opt-btn" data-val="glowing light emanating from the heart chakra on the chest, ethereal energy glow">胸のチャクラ光</button>
         <button class="opt-btn" data-val="glowing aura surrounding the body, halo of light">オーラ・光の輪</button>
         <button class="opt-btn" data-val="falling flower petals, floral particles surrounding">花びら・花のエフェクト</button>
@@ -138,7 +165,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="tab-poster" style="display:none">
     <div class="section">
       <div class="section-label">イベント種類</div>
-      <div class="btn-group" data-group="e_type">
+      <div class="btn-group" data-group="e_type" data-multi="true">
         <button class="opt-btn" data-val="concert music event poster">コンサート・音楽</button>
         <button class="opt-btn" data-val="movie theater stage performance poster">映画・舞台</button>
         <button class="opt-btn" data-val="art exhibition gallery poster">展覧会・アート</button>
@@ -149,7 +176,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">雰囲気</div>
-      <div class="btn-group" data-group="e_mood">
+      <div class="btn-group" data-group="e_mood" data-multi="true">
         <button class="opt-btn" data-val="festive, vibrant, celebratory atmosphere">華やか・フェスタ</button>
         <button class="opt-btn" data-val="mysterious, dark, atmospheric mood">神秘的・ダーク</button>
         <button class="opt-btn" data-val="energetic, dynamic, powerful feeling">エネルギッシュ</button>
@@ -159,7 +186,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">カラー</div>
-      <div class="btn-group" data-group="e_color">
+      <div class="btn-group" data-group="e_color" data-multi="true">
         <button class="opt-btn" data-val="warm red orange color palette">暖色系（赤・オレンジ）</button>
         <button class="opt-btn" data-val="cool blue purple color palette">寒色系（青・紫）</button>
         <button class="opt-btn" data-val="monochrome black and white">モノクロ</button>
@@ -169,7 +196,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">スタイル</div>
-      <div class="btn-group" data-group="e_style">
+      <div class="btn-group" data-group="e_style" data-multi="true">
         <button class="opt-btn" data-val="modern minimalist design">モダン・ミニマル</button>
         <button class="opt-btn" data-val="retro vintage design">レトロ・ヴィンテージ</button>
         <button class="opt-btn" data-val="cyberpunk neon futuristic design">サイバーパンク</button>
@@ -181,7 +208,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">人物</div>
-      <div class="btn-group" data-group="e_person">
+      <div class="btn-group" data-group="e_person" data-multi="true">
         <button class="opt-btn" data-val="featuring a beautiful woman">人物あり（女性）</button>
         <button class="opt-btn" data-val="featuring a man">人物あり（男性）</button>
         <button class="opt-btn" data-val="featuring multiple people">人物あり（複数）</button>
@@ -194,7 +221,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="tab-landscape" style="display:none">
     <div class="section">
       <div class="section-label">場所</div>
-      <div class="btn-group" data-group="l_place">
+      <div class="btn-group" data-group="l_place" data-multi="true">
         <button class="opt-btn" data-val="majestic mountain peaks landscape">山・峰</button>
         <button class="opt-btn" data-val="ocean beach shoreline scenery">海・ビーチ</button>
         <button class="opt-btn" data-val="lush dense forest scenery">森・林</button>
@@ -205,7 +232,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">時間帯</div>
-      <div class="btn-group" data-group="l_time">
+      <div class="btn-group" data-group="l_time" data-multi="true">
         <button class="opt-btn" data-val="dawn morning sunrise light">朝・夜明け</button>
         <button class="opt-btn" data-val="midday bright sunshine">昼・晴れ</button>
         <button class="opt-btn" data-val="golden sunset twilight">夕焼け</button>
@@ -214,7 +241,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">天気・効果</div>
-      <div class="btn-group" data-group="l_weather">
+      <div class="btn-group" data-group="l_weather" data-multi="true">
         <button class="opt-btn" data-val="clear blue sky">快晴</button>
         <button class="opt-btn" data-val="misty foggy atmosphere">霧・靄</button>
         <button class="opt-btn" data-val="rainy wet atmosphere">雨</button>
@@ -224,7 +251,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">季節</div>
-      <div class="btn-group" data-group="l_season">
+      <div class="btn-group" data-group="l_season" data-multi="true">
         <button class="opt-btn" data-val="spring cherry blossom season">春・桜</button>
         <button class="opt-btn" data-val="summer lush greenery">夏・緑</button>
         <button class="opt-btn" data-val="autumn fall foliage colors">秋・紅葉</button>
@@ -233,7 +260,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">画風</div>
-      <div class="btn-group" data-group="l_style">
+      <div class="btn-group" data-group="l_style" data-multi="true">
         <button class="opt-btn" data-val="photorealistic photography">写真リアル</button>
         <button class="opt-btn" data-val="watercolor painting style">水彩</button>
         <button class="opt-btn" data-val="oil painting style">油絵</button>
@@ -247,7 +274,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="tab-fantasy" style="display:none">
     <div class="section">
       <div class="section-label">世界観</div>
-      <div class="btn-group" data-group="f_world">
+      <div class="btn-group" data-group="f_world" data-multi="true">
         <button class="opt-btn" data-val="medieval fantasy world setting">中世ファンタジー</button>
         <button class="opt-btn" data-val="Japanese fantasy world setting">和風ファンタジー</button>
         <button class="opt-btn" data-val="steampunk universe setting">スチームパンク</button>
@@ -257,7 +284,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">キャラクター</div>
-      <div class="btn-group" data-group="f_char">
+      <div class="btn-group" data-group="f_char" data-multi="true">
         <button class="opt-btn" data-val="wizard witch mage character">魔法使い・魔女</button>
         <button class="opt-btn" data-val="knight warrior soldier character">騎士・戦士</button>
         <button class="opt-btn" data-val="elf fairy being character">エルフ・妖精</button>
@@ -267,7 +294,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">雰囲気</div>
-      <div class="btn-group" data-group="f_atm">
+      <div class="btn-group" data-group="f_atm" data-multi="true">
         <button class="opt-btn" data-val="epic grand majestic atmosphere">壮大・叙事詩的</button>
         <button class="opt-btn" data-val="mysterious ethereal magical atmosphere">神秘的</button>
         <button class="opt-btn" data-val="dark grim sinister atmosphere">ダーク</button>
@@ -276,7 +303,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="section">
       <div class="section-label">画風</div>
-      <div class="btn-group" data-group="f_style">
+      <div class="btn-group" data-group="f_style" data-multi="true">
         <button class="opt-btn" data-val="digital art style">デジタルアート</button>
         <button class="opt-btn" data-val="anime style illustration">アニメ風</button>
         <button class="opt-btn" data-val="manga style comic illustration">漫画風</button>
@@ -291,7 +318,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
   <!-- 品質タグ -->
   <div class="section quality-row">
-    <div class="section-label">品質タグ（複数選択可）</div>
+    <div class="section-label">品質タグ</div>
     <div class="btn-group" data-group="quality" data-multi="true">
       <button class="opt-btn selected" data-val="high quality">高品質</button>
       <button class="opt-btn selected" data-val="detailed">高精細</button>
@@ -303,10 +330,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
   </div>
 
-  <!-- 追加テキスト -->
-  <div class="extra-row">
-    <div class="extra-label">追加キーワード（英語推奨・任意）</div>
-    <input type="text" class="extra-input" id="extraInput" placeholder="例: red hair, holding a sword, standing on cliff..." oninput="buildPrompt()">
+  <!-- 自由入力欄 -->
+  <div class="section extra-row">
+    <div class="section-label extra-label">自由入力（日本語OK・任意）</div>
+    <input type="text" class="extra-input" id="extraInput" placeholder="例: 赤いロングヘア、剣を持っている、笑顔..." oninput="buildPrompt()">
   </div>
 
   <!-- プロンプト出力 -->
@@ -330,14 +357,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 var currentTab = 'portrait';
 
 var tabGroups = {
-  portrait: ['p_subject','p_mood','p_comp','p_bg','p_light','p_style','p_fx'],
+  portrait: ['p_subject','p_ethnicity','p_outfit','p_mood','p_comp','p_bg','p_light','p_style','p_fx'],
   poster:   ['e_type','e_mood','e_color','e_style','e_person'],
   landscape:['l_place','l_time','l_weather','l_season','l_style'],
   fantasy:  ['f_world','f_char','f_atm','f_style']
 };
-
-// シングル選択グループの現在値
-var selections = {};
 
 function switchTab(tab) {
   currentTab = tab;
@@ -352,16 +376,9 @@ function switchTab(tab) {
 
 function initButtons() {
   document.querySelectorAll('[data-group]').forEach(function(group) {
-    var groupName = group.dataset.group;
-    var isMulti = group.dataset.multi === 'true';
     group.querySelectorAll('.opt-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        if (isMulti) {
-          btn.classList.toggle('selected');
-        } else {
-          group.querySelectorAll('.opt-btn').forEach(function(b){ b.classList.remove('selected'); });
-          btn.classList.add('selected');
-        }
+        btn.classList.toggle('selected');
         buildPrompt();
       });
     });
@@ -371,15 +388,11 @@ function initButtons() {
 function getGroupVal(groupName) {
   var group = document.querySelector('[data-group="'+groupName+'"]');
   if (!group) return '';
-  var isMulti = group.dataset.multi === 'true';
-  if (isMulti) {
-    var vals = [];
-    group.querySelectorAll('.opt-btn.selected').forEach(function(b){ if(b.dataset.val) vals.push(b.dataset.val); });
-    return vals.join(', ');
-  } else {
-    var sel = group.querySelector('.opt-btn.selected');
-    return sel ? sel.dataset.val : '';
-  }
+  var vals = [];
+  group.querySelectorAll('.opt-btn.selected').forEach(function(b) {
+    if (b.dataset.val) vals.push(b.dataset.val);
+  });
+  return vals.join(', ');
 }
 
 function buildPrompt() {
@@ -423,11 +436,9 @@ function copyPrompt() {
 
 function resetAll() {
   document.querySelectorAll('[data-group]').forEach(function(group) {
-    var isMulti = group.dataset.multi === 'true';
     group.querySelectorAll('.opt-btn').forEach(function(btn) {
       btn.classList.remove('selected');
     });
-    // 品質タグのデフォルト値を復元
     if (group.dataset.group === 'quality') {
       group.querySelectorAll('.opt-btn').forEach(function(btn) {
         if (btn.dataset.val === 'high quality' || btn.dataset.val === 'detailed') {
