@@ -41,6 +41,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .extra-label{font-size:.72rem;color:#8b7ab8;margin-bottom:6px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
 .quality-row{margin-top:14px}
 .divider{height:1px;background:#1e1440;margin:14px 0}
+.inline-input{width:100%;margin-top:5px;padding:4px 10px;background:#0d0820;border:1px solid #2a1a50;border-radius:6px;color:#c0b0e8;font-size:.74rem;outline:none;transition:border .2s}
+.inline-input::placeholder{color:#4a3a68;font-size:.72rem}
+.inline-input:focus{border-color:#6d28d9}
 </style>
 </head>
 <body>
@@ -72,6 +75,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="adult man">大人の男性</button>
         <button class="opt-btn" data-val="elderly person">お年寄り</button>
       </div>
+      <input class="inline-input" id="extra_p_subject" placeholder="その他（例: twins, pregnant woman...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">人種・国籍</div>
@@ -84,6 +88,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="Latino, Latin American appearance">ラテン系</button>
         <button class="opt-btn" data-val="mixed ethnicity, multiracial appearance">混血・ハーフ</button>
       </div>
+      <input class="inline-input" id="extra_p_ethnicity" placeholder="その他（例: Scandinavian, Middle Eastern...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">服装</div>
@@ -98,6 +103,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="white medical coat, nurse uniform">白衣・ナース服</button>
         <button class="opt-btn" data-val="sportswear, athletic wear">スポーツウェア</button>
       </div>
+      <input class="inline-input" id="extra_p_outfit" placeholder="その他（例: red hoodie, floral skirt...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">雰囲気</div>
@@ -109,6 +115,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="dark, intense expression">ダーク</button>
         <button class="opt-btn" data-val="mysterious, enigmatic expression">ミステリアス</button>
       </div>
+      <input class="inline-input" id="extra_p_mood" placeholder="その他（例: melancholic, joyful, fierce...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">構図</div>
@@ -118,6 +125,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="close-up face shot">クローズアップ</button>
         <button class="opt-btn" data-val="three-quarter angle">斜め</button>
       </div>
+      <input class="inline-input" id="extra_p_comp" placeholder="その他（例: from behind, bird's eye view...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">背景</div>
@@ -128,6 +136,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="cozy cafe interior background">カフェ・室内</button>
         <button class="opt-btn" data-val="golden sunset sky background">夕焼け空</button>
       </div>
+      <input class="inline-input" id="extra_p_bg" placeholder="その他（例: cherry blossom park, beach...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">照明</div>
@@ -137,6 +146,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="golden hour sunlight">夕日・ゴールデンアワー</button>
         <button class="opt-btn" data-val="dramatic cinematic lighting">映画的・ドラマチック</button>
       </div>
+      <input class="inline-input" id="extra_p_light" placeholder="その他（例: neon lights, candlelight...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">画風</div>
@@ -149,6 +159,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="oil painting">油絵</button>
         <button class="opt-btn" data-val="Alphonse Mucha style, Art Nouveau">ミュシャ風</button>
       </div>
+      <input class="inline-input" id="extra_p_style" placeholder="その他（例: ukiyo-e, impressionism...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">エフェクト</div>
@@ -158,6 +169,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="falling flower petals, floral particles surrounding">花びら・花のエフェクト</button>
         <button class="opt-btn" data-val="golden dust particles, magical light specks floating">光の粒子・ほこり</button>
       </div>
+      <input class="inline-input" id="extra_p_fx" placeholder="その他（例: smoke, sparkles, wings...）" oninput="buildPrompt()">
     </div>
   </div>
 
@@ -173,6 +185,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="sports event poster">スポーツ</button>
         <button class="opt-btn" data-val="party ceremony celebration poster">パーティー・祝典</button>
       </div>
+      <input class="inline-input" id="extra_e_type" placeholder="その他（例: yoga class, book fair...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">雰囲気</div>
@@ -183,6 +196,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="elegant, luxurious, sophisticated tone">エレガント・高級感</button>
         <button class="opt-btn" data-val="pop art, casual, fun vibe">ポップ・カジュアル</button>
       </div>
+      <input class="inline-input" id="extra_e_mood" placeholder="その他（例: nostalgic, dreamy...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">カラー</div>
@@ -193,6 +207,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="gold champagne color palette">ゴールド・シャンパン</button>
         <button class="opt-btn" data-val="colorful neon vibrant palette">カラフル・ネオン</button>
       </div>
+      <input class="inline-input" id="extra_e_color" placeholder="その他（例: pastel pink, deep navy...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">スタイル</div>
@@ -205,6 +220,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="Alphonse Mucha Art Nouveau style">ミュシャ風</button>
         <button class="opt-btn" data-val="manga comic illustration style">漫画風</button>
       </div>
+      <input class="inline-input" id="extra_e_style" placeholder="その他（例: bauhaus, grunge...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">人物</div>
@@ -214,6 +230,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="featuring multiple people">人物あり（複数）</button>
         <button class="opt-btn" data-val="no people, objects and typography only">人物なし</button>
       </div>
+      <input class="inline-input" id="extra_e_person" placeholder="その他（例: silhouette of a dancer...）" oninput="buildPrompt()">
     </div>
   </div>
 
@@ -229,6 +246,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="vast desert landscape">砂漠</button>
         <button class="opt-btn" data-val="outer space planets galaxies">宇宙・惑星</button>
       </div>
+      <input class="inline-input" id="extra_l_place" placeholder="その他（例: rice terraces, lavender field...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">時間帯</div>
@@ -238,6 +256,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="golden sunset twilight">夕焼け</button>
         <button class="opt-btn" data-val="night moonlight scene">夜・月光</button>
       </div>
+      <input class="inline-input" id="extra_l_time" placeholder="その他（例: blue hour, midnight...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">天気・効果</div>
@@ -248,6 +267,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="snowy winter weather">雪</button>
         <button class="opt-btn" data-val="stormy dramatic clouds">嵐</button>
       </div>
+      <input class="inline-input" id="extra_l_weather" placeholder="その他（例: rainbow, northern lights...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">季節</div>
@@ -257,6 +277,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="autumn fall foliage colors">秋・紅葉</button>
         <button class="opt-btn" data-val="winter snowy scene">冬・雪</button>
       </div>
+      <input class="inline-input" id="extra_l_season" placeholder="その他（例: rainy season, harvest time...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">画風</div>
@@ -267,6 +288,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="fantasy art style">ファンタジー風</button>
         <button class="opt-btn" data-val="Alphonse Mucha Art Nouveau style">ミュシャ風</button>
       </div>
+      <input class="inline-input" id="extra_l_style" placeholder="その他（例: pixel art, concept art...）" oninput="buildPrompt()">
     </div>
   </div>
 
@@ -281,6 +303,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="cyberpunk dystopian world setting">サイバーパンク</button>
         <button class="opt-btn" data-val="modern sci-fi setting">現代・SF</button>
       </div>
+      <input class="inline-input" id="extra_f_world" placeholder="その他（例: underwater kingdom, post-apocalyptic...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">キャラクター</div>
@@ -291,6 +314,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="dragon monster creature">竜・モンスター</button>
         <button class="opt-btn" data-val="robot android AI character">ロボット・AI</button>
       </div>
+      <input class="inline-input" id="extra_f_char" placeholder="その他（例: vampire, angel, demon lord...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">雰囲気</div>
@@ -300,6 +324,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="dark grim sinister atmosphere">ダーク</button>
         <button class="opt-btn" data-val="cute charming wholesome atmosphere">かわいい・ほのぼの</button>
       </div>
+      <input class="inline-input" id="extra_f_atm" placeholder="その他（例: serene, chaotic, whimsical...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">画風</div>
@@ -311,6 +336,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="children's book illustration style">絵本・イラスト</button>
         <button class="opt-btn" data-val="Alphonse Mucha Art Nouveau style">ミュシャ風</button>
       </div>
+      <input class="inline-input" id="extra_f_style" placeholder="その他（例: ukiyo-e, ink wash painting...）" oninput="buildPrompt()">
     </div>
   </div>
 
@@ -392,6 +418,8 @@ function getGroupVal(groupName) {
   group.querySelectorAll('.opt-btn.selected').forEach(function(b) {
     if (b.dataset.val) vals.push(b.dataset.val);
   });
+  var inlineInput = document.getElementById('extra_'+groupName);
+  if (inlineInput && inlineInput.value.trim()) vals.push(inlineInput.value.trim());
   return vals.join(', ');
 }
 
@@ -447,6 +475,7 @@ function resetAll() {
       });
     }
   });
+  document.querySelectorAll('.inline-input').forEach(function(el){ el.value = ''; });
   document.getElementById('extraInput').value = '';
   buildPrompt();
 }
