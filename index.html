@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>画像プロンプトビルダー</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0a1e;color:#e8e0ff;min-height:100vh;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.header{background:linear-gradient(135deg,#1a0a3e 0%,#2d1060 100%);padding:20px 16px 16px;text-align:center;border-bottom:1px solid #3d2080}
+.header h1{font-size:1.4rem;font-weight:700;color:#c9b8ff;letter-spacing:.05em}
+.header p{font-size:.78rem;color:#9980cc;margin-top:4px}
+.tabs{display:flex;background:#0d0820;border-bottom:1px solid #2d1a5e;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-btn{flex:1;min-width:72px;padding:12px 8px;font-size:.75rem;color:#7060a8;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;font-weight:500}
+.tab-btn.active{color:#c9b8ff;border-bottom-color:#8b5cf6;background:#120d2a}
+.tab-btn:hover:not(.active){color:#a090d0;background:#110c25}
+.main{padding:14px 12px;max-width:640px;margin:0 auto}
+.section{margin-bottom:14px}
+.section-label{font-size:.72rem;color:#8b7ab8;margin-bottom:6px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.btn-group{display:flex;flex-wrap:wrap;gap:6px}
+.opt-btn{padding:6px 12px;font-size:.8rem;border-radius:20px;border:1px solid #3d2a70;background:#1a1040;color:#b0a0e0;cursor:pointer;transition:all .2s;line-height:1.3}
+.opt-btn:hover{border-color:#7c3aed;color:#e0d0ff;background:#211355}
+.opt-btn.selected{background:#5b21b6;border-color:#8b5cf6;color:#fff;font-weight:600}
+.prompt-area{margin-top:18px;background:#0d0820;border:1px solid #3d2a70;border-radius:12px;padding:14px}
+.prompt-label{font-size:.72rem;color:#8b7ab8;margin-bottom:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.prompt-label span{font-size:.65rem;background:#2d1a5e;padding:2px 7px;border-radius:10px;color:#a090d0;text-transform:none;letter-spacing:0}
+.prompt-text{font-size:.85rem;color:#d4c8f8;line-height:1.6;min-height:60px;word-break:break-word;background:#13092e;border-radius:8px;padding:10px 12px;border:1px solid #2d1a5e;font-family:monospace}
+.prompt-empty{color:#5a4a80;font-style:italic;font-size:.82rem}
+.btn-row{display:flex;gap:8px;margin-top:10px}
+.action-btn{flex:1;padding:10px;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
+.copy-btn{background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff}
+.copy-btn:hover{background:linear-gradient(135deg,#5b21b6,#7c3aed)}
+.copy-btn.copied{background:linear-gradient(135deg,#065f46,#059669)}
+.reset-btn{background:#1e1040;color:#9080c0;border:1px solid #3d2a70;flex:none;padding:10px 16px}
+.reset-btn:hover{background:#2d1a5e;color:#c0b0e0}
+.extra-row{margin-top:12px}
+.extra-input{width:100%;padding:8px 12px;background:#13092e;border:1px solid #2d1a5e;border-radius:8px;color:#d4c8f8;font-size:.82rem;outline:none;transition:border .2s}
+.extra-input::placeholder{color:#5a4a80}
+.extra-input:focus{border-color:#6d28d9}
+.extra-label{font-size:.7rem;color:#7060a8;margin-bottom:4px}
+.quality-row{margin-top:14px}
+.divider{height:1px;background:#1e1440;margin:14px 0}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎨 画像プロンプトビルダー</h1>
+  <p>Grok Imagine / Stable Diffusion 用プロンプト生成ツール</p>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('portrait')">👤 ポートレート</button>
+  <button class="tab-btn" onclick="switchTab('poster')">🎭 イベントポスター</button>
+  <button class="tab-btn" onclick="switchTab('landscape')">🌿 風景・自然</button>
+  <button class="tab-btn" onclick="switchTab('fantasy')">⚔️ ファンタジー</button>
+</div>
+
+<div class="main">
+
+  <!-- ポートレート -->
+  <div id="tab-portrait">
+    <div class="section">
+      <div class="section-label">性別・年齢</div>
+      <div class="btn-group" data-group="p_subject">
+        <button class="opt-btn" data-val="young woman">若い女性</button>
+        <button class="opt-btn" data-val="young man">若い男性</button>
+        <button class="opt-btn" data-val="child">子供</button>
+        <button class="opt-btn" data-val="adult woman">大人の女性</button>
+        <button class="opt-btn" data-val="adult man">大人の男性</button>
+        <button class="opt-btn" data-val="elderly person">お年寄り</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">雰囲気</div>
+      <div class="btn-group" data-group="p_mood">
+        <button class="opt-btn" data-val="natural, soft expression">ナチュラル</button>
+        <button class="opt-btn" data-val="cool, confident expression">クール</button>
+        <button class="opt-btn" data-val="cute, cheerful expression">かわいい</button>
+        <button class="opt-btn" data-val="elegant, graceful expression">エレガント</button>
+        <button class="opt-btn" data-val="dark, intense expression">ダーク</button>
+        <button class="opt-btn" data-val="mysterious, enigmatic expression">ミステリアス</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">構図</div>
+      <div class="btn-group" data-group="p_comp">
+        <button class="opt-btn" data-val="bust-up portrait">バストアップ</button>
+        <button class="opt-btn" data-val="full body shot">全身</button>
+        <button class="opt-btn" data-val="close-up face shot">クローズアップ</button>
+        <button class="opt-btn" data-val="three-quarter angle">斜め</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">背景</div>
+      <div class="btn-group" data-group="p_bg">
+        <button class="opt-btn" data-val="white studio background">白・グレー</button>
+        <button class="opt-btn" data-val="lush forest background">自然・森</button>
+        <button class="opt-btn" data-val="urban cityscape background">都市</button>
+        <button class="opt-btn" data-val="cozy cafe interior background">カフェ・室内</button>
+        <button class="opt-btn" data-val="golden sunset sky background">夕焼け空</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">照明</div>
+      <div class="btn-group" data-group="p_light">
+        <button class="opt-btn" data-val="natural soft lighting">自然光</button>
+        <button class="opt-btn" data-val="professional studio lighting">スタジオ照明</button>
+        <button class="opt-btn" data-val="golden hour sunlight">夕日・ゴールデンアワー</button>
+        <button class="opt-btn" data-val="dramatic cinematic lighting">映画的・ドラマチック</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">画風</div>
+      <div class="btn-group" data-group="p_style">
+        <button class="opt-btn" data-val="photorealistic, hyperrealistic">写真リアル</button>
+        <button class="opt-btn" data-val="digital art">デジタルアート</button>
+        <button class="opt-btn" data-val="watercolor painting">水彩</button>
+        <button class="opt-btn" data-val="anime style">アニメ風</button>
+        <button class="opt-btn" data-val="manga style, comic style">漫画風</button>
+        <button class="opt-btn" data-val="oil painting">油絵</button>
+        <button class="opt-btn" data-val="Alphonse Mucha style, Art Nouveau">ミュシャ風</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">エフェクト</div>
+      <div class="btn-group" data-group="p_fx">
+        <button class="opt-btn" data-val="">なし</button>
+        <button class="opt-btn" data-val="glowing light emanating from the heart chakra on the chest, ethereal energy glow">胸のチャクラ光</button>
+        <button class="opt-btn" data-val="glowing aura surrounding the body, halo of light">オーラ・光の輪</button>
+        <button class="opt-btn" data-val="falling flower petals, floral particles surrounding">花びら・花のエフェクト</button>
+        <button class="opt-btn" data-val="golden dust particles, magical light specks floating">光の粒子・ほこり</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- イベントポスター -->
+  <div id="tab-poster" style="display:none">
+    <div class="section">
+      <div class="section-label">イベント種類</div>
+      <div class="btn-group" data-group="e_type">
+        <button class="opt-btn" data-val="concert music event poster">コンサート・音楽</button>
+        <button class="opt-btn" data-val="movie theater stage performance poster">映画・舞台</button>
+        <button class="opt-btn" data-val="art exhibition gallery poster">展覧会・アート</button>
+        <button class="opt-btn" data-val="festival celebration poster">フェスティバル</button>
+        <button class="opt-btn" data-val="sports event poster">スポーツ</button>
+        <button class="opt-btn" data-val="party ceremony celebration poster">パーティー・祝典</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">雰囲気</div>
+      <div class="btn-group" data-group="e_mood">
+        <button class="opt-btn" data-val="festive, vibrant, celebratory atmosphere">華やか・フェスタ</button>
+        <button class="opt-btn" data-val="mysterious, dark, atmospheric mood">神秘的・ダーク</button>
+        <button class="opt-btn" data-val="energetic, dynamic, powerful feeling">エネルギッシュ</button>
+        <button class="opt-btn" data-val="elegant, luxurious, sophisticated tone">エレガント・高級感</button>
+        <button class="opt-btn" data-val="pop art, casual, fun vibe">ポップ・カジュアル</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">カラー</div>
+      <div class="btn-group" data-group="e_color">
+        <button class="opt-btn" data-val="warm red orange color palette">暖色系（赤・オレンジ）</button>
+        <button class="opt-btn" data-val="cool blue purple color palette">寒色系（青・紫）</button>
+        <button class="opt-btn" data-val="monochrome black and white">モノクロ</button>
+        <button class="opt-btn" data-val="gold champagne color palette">ゴールド・シャンパン</button>
+        <button class="opt-btn" data-val="colorful neon vibrant palette">カラフル・ネオン</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">スタイル</div>
+      <div class="btn-group" data-group="e_style">
+        <button class="opt-btn" data-val="modern minimalist design">モダン・ミニマル</button>
+        <button class="opt-btn" data-val="retro vintage design">レトロ・ヴィンテージ</button>
+        <button class="opt-btn" data-val="cyberpunk neon futuristic design">サイバーパンク</button>
+        <button class="opt-btn" data-val="classical art decorative design">クラシック・アート</button>
+        <button class="opt-btn" data-val="Japanese traditional aesthetic design">和風</button>
+        <button class="opt-btn" data-val="Alphonse Mucha Art Nouveau style">ミュシャ風</button>
+        <button class="opt-btn" data-val="manga comic illustration style">漫画風</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">人物</div>
+      <div class="btn-group" data-group="e_person">
+        <button class="opt-btn" data-val="featuring a beautiful woman">人物あり（女性）</button>
+        <button class="opt-btn" data-val="featuring a man">人物あり（男性）</button>
+        <button class="opt-btn" data-val="featuring multiple people">人物あり（複数）</button>
+        <button class="opt-btn" data-val="no people, objects and typography only">人物なし</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 風景・自然 -->
+  <div id="tab-landscape" style="display:none">
+    <div class="section">
+      <div class="section-label">場所</div>
+      <div class="btn-group" data-group="l_place">
+        <button class="opt-btn" data-val="majestic mountain peaks landscape">山・峰</button>
+        <button class="opt-btn" data-val="ocean beach shoreline scenery">海・ビーチ</button>
+        <button class="opt-btn" data-val="lush dense forest scenery">森・林</button>
+        <button class="opt-btn" data-val="urban city night skyline">都市・夜景</button>
+        <button class="opt-btn" data-val="vast desert landscape">砂漠</button>
+        <button class="opt-btn" data-val="outer space planets galaxies">宇宙・惑星</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">時間帯</div>
+      <div class="btn-group" data-group="l_time">
+        <button class="opt-btn" data-val="dawn morning sunrise light">朝・夜明け</button>
+        <button class="opt-btn" data-val="midday bright sunshine">昼・晴れ</button>
+        <button class="opt-btn" data-val="golden sunset twilight">夕焼け</button>
+        <button class="opt-btn" data-val="night moonlight scene">夜・月光</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">天気・効果</div>
+      <div class="btn-group" data-group="l_weather">
+        <button class="opt-btn" data-val="clear blue sky">快晴</button>
+        <button class="opt-btn" data-val="misty foggy atmosphere">霧・靄</button>
+        <button class="opt-btn" data-val="rainy wet atmosphere">雨</button>
+        <button class="opt-btn" data-val="snowy winter weather">雪</button>
+        <button class="opt-btn" data-val="stormy dramatic clouds">嵐</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">季節</div>
+      <div class="btn-group" data-group="l_season">
+        <button class="opt-btn" data-val="spring cherry blossom season">春・桜</button>
+        <button class="opt-btn" data-val="summer lush greenery">夏・緑</button>
+        <button class="opt-btn" data-val="autumn fall foliage colors">秋・紅葉</button>
+        <button class="opt-btn" data-val="winter snowy scene">冬・雪</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">画風</div>
+      <div class="btn-group" data-group="l_style">
+        <button class="opt-btn" data-val="photorealistic photography">写真リアル</button>
+        <button class="opt-btn" data-val="watercolor painting style">水彩</button>
+        <button class="opt-btn" data-val="oil painting style">油絵</button>
+        <button class="opt-btn" data-val="fantasy art style">ファンタジー風</button>
+        <button class="opt-btn" data-val="Alphonse Mucha Art Nouveau style">ミュシャ風</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ファンタジー -->
+  <div id="tab-fantasy" style="display:none">
+    <div class="section">
+      <div class="section-label">世界観</div>
+      <div class="btn-group" data-group="f_world">
+        <button class="opt-btn" data-val="medieval fantasy world setting">中世ファンタジー</button>
+        <button class="opt-btn" data-val="Japanese fantasy world setting">和風ファンタジー</button>
+        <button class="opt-btn" data-val="steampunk universe setting">スチームパンク</button>
+        <button class="opt-btn" data-val="cyberpunk dystopian world setting">サイバーパンク</button>
+        <button class="opt-btn" data-val="modern sci-fi setting">現代・SF</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">キャラクター</div>
+      <div class="btn-group" data-group="f_char">
+        <button class="opt-btn" data-val="wizard witch mage character">魔法使い・魔女</button>
+        <button class="opt-btn" data-val="knight warrior soldier character">騎士・戦士</button>
+        <button class="opt-btn" data-val="elf fairy being character">エルフ・妖精</button>
+        <button class="opt-btn" data-val="dragon monster creature">竜・モンスター</button>
+        <button class="opt-btn" data-val="robot android AI character">ロボット・AI</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">雰囲気</div>
+      <div class="btn-group" data-group="f_atm">
+        <button class="opt-btn" data-val="epic grand majestic atmosphere">壮大・叙事詩的</button>
+        <button class="opt-btn" data-val="mysterious ethereal magical atmosphere">神秘的</button>
+        <button class="opt-btn" data-val="dark grim sinister atmosphere">ダーク</button>
+        <button class="opt-btn" data-val="cute charming wholesome atmosphere">かわいい・ほのぼの</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">画風</div>
+      <div class="btn-group" data-group="f_style">
+        <button class="opt-btn" data-val="digital art style">デジタルアート</button>
+        <button class="opt-btn" data-val="anime style illustration">アニメ風</button>
+        <button class="opt-btn" data-val="manga style comic illustration">漫画風</button>
+        <button class="opt-btn" data-val="video game CG concept art">ゲームCG</button>
+        <button class="opt-btn" data-val="children's book illustration style">絵本・イラスト</button>
+        <button class="opt-btn" data-val="Alphonse Mucha Art Nouveau style">ミュシャ風</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 品質タグ -->
+  <div class="section quality-row">
+    <div class="section-label">品質タグ（複数選択可）</div>
+    <div class="btn-group" data-group="quality" data-multi="true">
+      <button class="opt-btn selected" data-val="high quality">高品質</button>
+      <button class="opt-btn selected" data-val="detailed">高精細</button>
+      <button class="opt-btn" data-val="4K">4K</button>
+      <button class="opt-btn" data-val="8K ultra HD">8K</button>
+      <button class="opt-btn" data-val="cinematic">映画的</button>
+      <button class="opt-btn" data-val="award winning">受賞作品風</button>
+      <button class="opt-btn" data-val="trending on artstation">Artstation人気</button>
+    </div>
+  </div>
+
+  <!-- 追加テキスト -->
+  <div class="extra-row">
+    <div class="extra-label">追加キーワード（英語推奨・任意）</div>
+    <input type="text" class="extra-input" id="extraInput" placeholder="例: red hair, holding a sword, standing on cliff..." oninput="buildPrompt()">
+  </div>
+
+  <!-- プロンプト出力 -->
+  <div class="prompt-area">
+    <div class="prompt-label">
+      生成プロンプト
+      <span>コピーしてGrok / SDに貼り付け</span>
+    </div>
+    <div class="prompt-text" id="promptOutput">
+      <span class="prompt-empty">← 上の選択肢をクリックするとプロンプトが生成されます</span>
+    </div>
+    <div class="btn-row">
+      <button class="action-btn copy-btn" id="copyBtn" onclick="copyPrompt()">📋 コピー</button>
+      <button class="action-btn reset-btn" onclick="resetAll()">↺ リセット</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var currentTab = 'portrait';
+
+var tabGroups = {
+  portrait: ['p_subject','p_mood','p_comp','p_bg','p_light','p_style','p_fx'],
+  poster:   ['e_type','e_mood','e_color','e_style','e_person'],
+  landscape:['l_place','l_time','l_weather','l_season','l_style'],
+  fantasy:  ['f_world','f_char','f_atm','f_style']
+};
+
+// シングル選択グループの現在値
+var selections = {};
+
+function switchTab(tab) {
+  currentTab = tab;
+  ['portrait','poster','landscape','fantasy'].forEach(function(t) {
+    document.getElementById('tab-'+t).style.display = (t === tab) ? '' : 'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach(function(btn, i) {
+    btn.classList.toggle('active', ['portrait','poster','landscape','fantasy'][i] === tab);
+  });
+  buildPrompt();
+}
+
+function initButtons() {
+  document.querySelectorAll('[data-group]').forEach(function(group) {
+    var groupName = group.dataset.group;
+    var isMulti = group.dataset.multi === 'true';
+    group.querySelectorAll('.opt-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (isMulti) {
+          btn.classList.toggle('selected');
+        } else {
+          group.querySelectorAll('.opt-btn').forEach(function(b){ b.classList.remove('selected'); });
+          btn.classList.add('selected');
+        }
+        buildPrompt();
+      });
+    });
+  });
+}
+
+function getGroupVal(groupName) {
+  var group = document.querySelector('[data-group="'+groupName+'"]');
+  if (!group) return '';
+  var isMulti = group.dataset.multi === 'true';
+  if (isMulti) {
+    var vals = [];
+    group.querySelectorAll('.opt-btn.selected').forEach(function(b){ if(b.dataset.val) vals.push(b.dataset.val); });
+    return vals.join(', ');
+  } else {
+    var sel = group.querySelector('.opt-btn.selected');
+    return sel ? sel.dataset.val : '';
+  }
+}
+
+function buildPrompt() {
+  var parts = [];
+  var groups = tabGroups[currentTab] || [];
+
+  groups.forEach(function(g) {
+    var v = getGroupVal(g);
+    if (v) parts.push(v);
+  });
+
+  var quality = getGroupVal('quality');
+  if (quality) parts.push(quality);
+
+  var extra = document.getElementById('extraInput').value.trim();
+  if (extra) parts.push(extra);
+
+  var out = document.getElementById('promptOutput');
+  if (parts.length === 0) {
+    out.innerHTML = '<span class="prompt-empty">← 上の選択肢をクリックするとプロンプトが生成されます</span>';
+  } else {
+    out.textContent = parts.join(', ');
+  }
+
+  var copyBtn = document.getElementById('copyBtn');
+  copyBtn.classList.remove('copied');
+  copyBtn.textContent = '📋 コピー';
+}
+
+function copyPrompt() {
+  var out = document.getElementById('promptOutput');
+  var text = out.textContent;
+  if (!text || text.includes('← ')) return;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    btn.textContent = '✅ コピー完了！';
+    setTimeout(function(){ btn.classList.remove('copied'); btn.textContent = '📋 コピー'; }, 2000);
+  });
+}
+
+function resetAll() {
+  document.querySelectorAll('[data-group]').forEach(function(group) {
+    var isMulti = group.dataset.multi === 'true';
+    group.querySelectorAll('.opt-btn').forEach(function(btn) {
+      btn.classList.remove('selected');
+    });
+    // 品質タグのデフォルト値を復元
+    if (group.dataset.group === 'quality') {
+      group.querySelectorAll('.opt-btn').forEach(function(btn) {
+        if (btn.dataset.val === 'high quality' || btn.dataset.val === 'detailed') {
+          btn.classList.add('selected');
+        }
+      });
+    }
+  });
+  document.getElementById('extraInput').value = '';
+  buildPrompt();
+}
+
+initButtons();
+buildPrompt();
+</script>
+</body>
+</html>
