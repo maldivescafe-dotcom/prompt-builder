@@ -14,9 +14,9 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0a1e;color:#e8e0ff;min-height:100vh;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-.header{background:linear-gradient(135deg,#1a0a3e 0%,#2d1060 100%);padding:20px 16px 16px;text-align:center;border-bottom:1px solid #3d2080}
-.header h1{font-size:1.4rem;font-weight:700;color:#c9b8ff;letter-spacing:.05em}
-.header p{font-size:.78rem;color:#9980cc;margin-top:4px}
+.header{background:url(header-bg.jpg) center/cover no-repeat,linear-gradient(135deg,#1a0a3e 0%,#2d1060 100%);padding:44px 16px 40px;text-align:center;border-bottom:1px solid #6b4fa0;position:relative}
+.header h1{font-family:"Hiragino Mincho ProN","Yu Mincho",Georgia,serif;font-size:1.55rem;font-weight:700;letter-spacing:.14em;background:linear-gradient(180deg,#f8e8b0 0%,#e8c96a 45%,#c9a23f 60%,#f0d98a 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 6px rgba(0,0,0,.85))}
+.header p{font-size:.74rem;color:#d4c8f0;margin-top:8px;letter-spacing:.12em;text-shadow:0 1px 4px rgba(0,0,0,.9)}
 .tabs{display:flex;background:#0d0820;border-bottom:1px solid #2d1a5e;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tab-btn{flex:1;min-width:72px;padding:12px 8px;font-size:.75rem;color:#7060a8;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;font-weight:500}
 .tab-btn.active{color:#c9b8ff;border-bottom-color:#8b5cf6;background:#120d2a}
@@ -56,7 +56,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <body>
 
 <div class="header">
-  <h1>🎨 画像プロンプトビルダー</h1>
+  <h1>画像プロンプトビルダー</h1>
   <p>Grok Imagine / Stable Diffusion 用プロンプト生成ツール</p>
 </div>
 

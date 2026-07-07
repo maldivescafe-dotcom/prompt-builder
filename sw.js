@@ -1,5 +1,5 @@
-const CACHE_NAME = 'promptbuilder-v1';
-const ASSETS = ['./', './index.html', './icon-192.png', './icon-512.png'];
+const CACHE_NAME = 'promptbuilder-v2';
+const ASSETS = ['./', './index.html', './icon-192.png', './icon-512.png', './header-bg.jpg'];
 
 self.addEventListener('install', function(e) {
   e.waitUntil(caches.open(CACHE_NAME).then(function(c) { return c.addAll(ASSETS); }));
