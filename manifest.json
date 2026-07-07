@@ -1,0 +1,14 @@
+{
+  "name": "画像プロンプトビルダー",
+  "short_name": "プロンプト",
+  "description": "Grok Imagine / Stable Diffusion 用プロンプト生成ツール",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f0a1e",
+  "theme_color": "#1a0a3e",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
