@@ -151,6 +151,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <input class="inline-input" id="extra_p_mood" placeholder="その他（例: melancholic, joyful, fierce...）" oninput="buildPrompt()">
     </div>
     <div class="section">
+      <div class="section-label">感情・感覚</div>
+      <div class="btn-group" data-group="p_feel" data-multi="true">
+        <button class="opt-btn" data-val="blissful, pleasantly comfortable feeling">気持ち良い</button>
+        <button class="opt-btn" data-val="blissful tantric atmosphere where souls feel each other's pleasant energy, sacred sensual connection">タントリックな気持ち良さ</button>
+        <button class="opt-btn" data-val="entranced, dreamy rapturous expression">うっとり</button>
+        <button class="opt-btn" data-val="euphoric happiness, overflowing joy">幸福感</button>
+        <button class="opt-btn" data-val="deeply relaxed, serene, completely at ease">深いリラックス</button>
+        <button class="opt-btn" data-val="liberating sense of freedom and openness">解放感</button>
+        <button class="opt-btn" data-val="heart-fluttering excitement, sparkling emotion">ときめき</button>
+        <button class="opt-btn" data-val="gentle warmth and tenderness">温もり</button>
+        <button class="opt-btn" data-val="ecstatic, intoxicated with bliss">陶酔・恍惚</button>
+        <button class="opt-btn" data-val="sacred awe, spiritually uplifted emotion">神聖な感動</button>
+      </div>
+      <input class="inline-input" id="extra_p_feel" placeholder="その他（例: nostalgic, healing warmth...）" oninput="buildPrompt()">
+    </div>
+    <div class="section">
       <div class="section-label">構図</div>
       <div class="btn-group" data-group="p_comp" data-multi="true">
         <button class="opt-btn" data-val="bust-up portrait">バストアップ</button>
@@ -423,7 +439,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 var currentTab = 'portrait';
 
 var tabGroups = {
-  portrait: ['p_subject','p_age','p_ethnicity','p_outfit','p_action','p_mood','p_comp','p_bg','p_light','p_style','p_fx'],
+  portrait: ['p_subject','p_age','p_ethnicity','p_outfit','p_action','p_mood','p_feel','p_comp','p_bg','p_light','p_style','p_fx'],
   poster:   ['e_type','e_mood','e_color','e_style','e_person'],
   landscape:['l_place','l_time','l_weather','l_season','l_style'],
   fantasy:  ['f_world','f_char','f_atm','f_style']
