@@ -78,6 +78,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <input class="inline-input" id="extra_p_subject" placeholder="その他（例: twins, pregnant woman...）" oninput="buildPrompt()">
     </div>
     <div class="section">
+      <div class="section-label">年齢</div>
+      <div class="btn-group" data-group="p_age" data-multi="true">
+        <button class="opt-btn" data-val="late teens">10代後半</button>
+        <button class="opt-btn" data-val="20 years old">20歳</button>
+        <button class="opt-btn" data-val="in their twenties">20代</button>
+        <button class="opt-btn" data-val="in their thirties">30代</button>
+        <button class="opt-btn" data-val="in their forties">40代</button>
+        <button class="opt-btn" data-val="in their fifties, mature">50代以上</button>
+      </div>
+      <input class="inline-input" id="extra_p_age" placeholder="その他（例: 25 years old...）" oninput="buildPrompt()">
+    </div>
+    <div class="section">
       <div class="section-label">人種・国籍</div>
       <div class="btn-group" data-group="p_ethnicity" data-multi="true">
         <button class="opt-btn" data-val="Japanese, East Asian facial features">日本人</button>
@@ -102,8 +114,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="sleeveless top, tank top">ノースリーブ</button>
         <button class="opt-btn" data-val="white medical coat, nurse uniform">白衣・ナース服</button>
         <button class="opt-btn" data-val="sportswear, athletic wear">スポーツウェア</button>
+        <button class="opt-btn" data-val="trendy modern Japanese youth fashion, stylish contemporary casual outfit">今どきの若い子の服</button>
       </div>
       <input class="inline-input" id="extra_p_outfit" placeholder="その他（例: red hoodie, floral skirt...）" oninput="buildPrompt()">
+    </div>
+    <div class="section">
+      <div class="section-label">動作・ポーズ</div>
+      <div class="btn-group" data-group="p_action" data-multi="true">
+        <button class="opt-btn" data-val="standing gracefully">立ち姿</button>
+        <button class="opt-btn" data-val="sitting relaxed">座る</button>
+        <button class="opt-btn" data-val="walking">歩く</button>
+        <button class="opt-btn" data-val="running">走る</button>
+        <button class="opt-btn" data-val="dancing">踊る</button>
+        <button class="opt-btn" data-val="jumping joyfully">ジャンプ</button>
+        <button class="opt-btn" data-val="meditating in lotus position, zen meditation pose">瞑想</button>
+        <button class="opt-btn" data-val="doing a yoga pose, stretching">ヨガ・ストレッチ</button>
+        <button class="opt-btn" data-val="praying with hands together">祈る</button>
+        <button class="opt-btn" data-val="lying down, relaxed reclining pose">寝転ぶ</button>
+        <button class="opt-btn" data-val="taking a shower, water droplets, wet hair">シャワー</button>
+        <button class="opt-btn" data-val="bathing in a bathtub, relaxing bath scene">入浴</button>
+      </div>
+      <input class="inline-input" id="extra_p_action" placeholder="その他（例: cooking, reading a book, singing...）" oninput="buildPrompt()">
     </div>
     <div class="section">
       <div class="section-label">雰囲気</div>
@@ -114,6 +145,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="elegant, graceful expression">エレガント</button>
         <button class="opt-btn" data-val="dark, intense expression">ダーク</button>
         <button class="opt-btn" data-val="mysterious, enigmatic expression">ミステリアス</button>
+        <button class="opt-btn" data-val="blissful tantric atmosphere, sacred spiritual energy, serene sensual warmth">タントラ風</button>
+        <button class="opt-btn" data-val="healing, peaceful, soothing atmosphere">癒やし・安らぎ</button>
       </div>
       <input class="inline-input" id="extra_p_mood" placeholder="その他（例: melancholic, joyful, fierce...）" oninput="buildPrompt()">
     </div>
@@ -135,6 +168,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="opt-btn" data-val="urban cityscape background">都市</button>
         <button class="opt-btn" data-val="cozy cafe interior background">カフェ・室内</button>
         <button class="opt-btn" data-val="golden sunset sky background">夕焼け空</button>
+        <button class="opt-btn" data-val="sacred meditation room with candles and soft drapes, spiritual sanctuary interior">神聖な空間</button>
       </div>
       <input class="inline-input" id="extra_p_bg" placeholder="その他（例: cherry blossom park, beach...）" oninput="buildPrompt()">
     </div>
@@ -164,7 +198,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="section">
       <div class="section-label">エフェクト</div>
       <div class="btn-group" data-group="p_fx" data-multi="true">
-        <button class="opt-btn" data-val="glowing light emanating from the heart chakra on the chest, ethereal energy glow">胸のチャクラ光</button>
+        <button class="opt-btn" data-val="glowing red light emanating from the root chakra at the base of the spine, ethereal energy glow">第1チャクラ光（赤・尾骨）</button>
+        <button class="opt-btn" data-val="glowing orange light emanating from the sacral chakra below the navel, ethereal energy glow">第2チャクラ光（橙・丹田）</button>
+        <button class="opt-btn" data-val="glowing golden yellow light emanating from the solar plexus chakra, ethereal energy glow">第3チャクラ光（黄・みぞおち）</button>
+        <button class="opt-btn" data-val="glowing green light emanating from the heart chakra on the chest, ethereal energy glow">第4チャクラ光（緑・胸）</button>
+        <button class="opt-btn" data-val="glowing blue light emanating from the throat chakra, ethereal energy glow">第5チャクラ光（青・喉）</button>
+        <button class="opt-btn" data-val="glowing indigo light emanating from the third eye chakra on the forehead, ethereal energy glow">第6チャクラ光（藍・眉間）</button>
+        <button class="opt-btn" data-val="glowing violet light emanating from the crown chakra above the head, ethereal energy glow">第7チャクラ光（紫・頭頂）</button>
         <button class="opt-btn" data-val="glowing aura surrounding the body, halo of light">オーラ・光の輪</button>
         <button class="opt-btn" data-val="falling flower petals, floral particles surrounding">花びら・花のエフェクト</button>
         <button class="opt-btn" data-val="golden dust particles, magical light specks floating">光の粒子・ほこり</button>
@@ -383,7 +423,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 var currentTab = 'portrait';
 
 var tabGroups = {
-  portrait: ['p_subject','p_ethnicity','p_outfit','p_mood','p_comp','p_bg','p_light','p_style','p_fx'],
+  portrait: ['p_subject','p_age','p_ethnicity','p_outfit','p_action','p_mood','p_comp','p_bg','p_light','p_style','p_fx'],
   poster:   ['e_type','e_mood','e_color','e_style','e_person'],
   landscape:['l_place','l_time','l_weather','l_season','l_style'],
   fantasy:  ['f_world','f_char','f_atm','f_style']
